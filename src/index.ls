@@ -1,4 +1,8 @@
 require! "./manifest"
+require! "./texture"
+require! "./item"
+require! "./block"
+require! "./util"
 require! "./json"
 require! "fs"
 #require! "./json"
@@ -17,6 +21,9 @@ export class PackMc
     icon : ( path ) ->
         @add "/pack_icon.png", fs.readFileSync( path )
         @
+    adddir : ( dir ) ->
+        if not fs.existsSync( "#{@dir}#dir" ) then fs.mkdirSync "#{@dir}#dir"
+        @
     pack : ->
         for file in @dirtree
             [ fname, type, data ] = file
@@ -26,3 +33,7 @@ export class PackMc
                 fs.writeFileSync fname, data
         @
 export manifest.manifest
+export item.item
+export block.block
+export texture.textures
+export util
